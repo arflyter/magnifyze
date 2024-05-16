@@ -1,0 +1,24 @@
+<svg
+  width="136"
+  height="48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g clip-path="url(#a)" fill="#334155">
+    <rect x="24" y="12" width="16" height="16" />
+    <text
+      x="56"
+      y="36"
+      fontSize="16"
+      fontFamily="Arial, sans-serif"
+      fill="#334155"
+    >
+      OKX
+    </text>
+  </g>
+  <defs>
+    <clipPath id="a">
+      <path fill="#fff" d="M0 0h136v48H0z" />
+    </clipPath>
+  </defs>
+</svg>
