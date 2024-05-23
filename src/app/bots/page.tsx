@@ -6,26 +6,18 @@ import Explore from '@/components/explore'
 import ActiveTrades from '@/components/ActiveTrades';
 import React, { useState } from 'react';
 
-
-
-const Home: React.FC = () => {
-  const [apiName, setApiName] = useState<string>('demo');
-
-  const handleNewApi = (newApiName: string) => {
-    setApiName(newApiName);
-  };
-
+export default function Home() {
   return (
     <>
-      <Header apiName={apiName} />
+      <Header />
       <Sidenav/>
       <main>
-      <Explore/>
-      <ActiveTrades/> 
+      
+       <Explore/>
+       <ActiveTrades/> 
       </main>
-      Footer
+      <Footer />
     </>
-  );
-};
+  )
+}
 
-export default Home;
