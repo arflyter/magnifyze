@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Fragment } from 'react';
 import Link from 'next/link';
 import { Popover, Transition } from '@headlessui/react';
@@ -6,18 +7,24 @@ import { usePathname } from 'next/navigation';
 import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
 import DropdownMenu from '@/components/account'; // Ensure this is the correct path
+import Image from 'next/image';
+import logoBinance from '@/images/logos/binance.svg';
 
 function MobileNavLink({
   href,
   children,
+  onClick,
 }: {
   href: string;
   children: React.ReactNode;
+  onClick?: () => void;
 }) {
   return (
-    <Popover.Button as={Link} href={href} className="block w-full p-2">
-      {children}
-    </Popover.Button>
+    <Link href={href} passHref>
+      <a className="block w-full p-2" onClick={onClick}>
+        {children}
+      </a>
+    </Link>
   );
 }
 
@@ -42,7 +49,7 @@ function MobileNavIcon({ open }: { open: boolean }) {
   );
 }
 
-function MobileNavigation() {
+function MobileNavigation({ setSelected }: { setSelected: (selected: string) => void }) {
   return (
     <Popover>
       <Popover.Button
@@ -78,8 +85,17 @@ function MobileNavigation() {
           >
             <MobileNavLink href="/news">News</MobileNavLink>
             <MobileNavLink href="/faq">FAQ</MobileNavLink>
-            <MobileNavLink href="/exchange">Connect</MobileNavLink>
+            <MobileNavLink href="/contact">Contact</MobileNavLink>
             <hr className="m-2 border-slate-300/40" />
+            <MobileNavLink href="/demo" onClick={() => setSelected('demo')}>
+              <div className="flex items-center">
+                <Image src={logoBinance} alt="Binance Logo" width={24} height={24} />
+                <span className="ml-2">Demo</span>
+              </div>
+            </MobileNavLink>
+            <MobileNavLink href="/plus" onClick={() => setSelected('plus')}>
+              <span className="text-xl">+</span>
+            </MobileNavLink>
             <Popover.Button as="div" className="block w-full p-2">
               <DropdownMenu /> {/* Mobile Dropdown Menu */}
             </Popover.Button>
@@ -91,7 +107,8 @@ function MobileNavigation() {
 }
 
 export function Header() {
-  const pathname = usePathname();  // Use the custom usePathname hook
+  const [selected, setSelected] = useState('demo');
+  const pathname = usePathname(); // Use the custom usePathname hook
 
   return (
     <header className="py-10">
@@ -105,8 +122,21 @@ export function Header() {
               <li className={clsx("inline-block rounded-lg px-4 py-2 hover:bg-sky-100 hover:text-blue-600 cursor-pointer", {'bg-sky-100 text-blue-600': pathname === "/faq"})}>
                 <Link href="/faq">FAQ</Link>
               </li>
-              <li className={clsx("inline-block rounded-lg px-4 py-2 hover:bg-sky-100 hover:text-blue-600 cursor-pointer", {'bg-sky-100 text-blue-600': pathname === "/exchange"})}>
-                <Link href="/exchange">Connect</Link>
+              <li className={clsx("inline-block rounded-lg px-4 py-2 hover:bg-sky-100 hover:text-blue-600 cursor-pointer", {'bg-sky-100 text-blue-600': pathname === "/contact"})}>
+                <Link href="/contact">Contact</Link>
+              </li>
+              <li className={clsx("inline-block rounded-lg px-4 py-2 hover:bg-sky-100 hover:text-blue-600 cursor-pointer", {'bg-sky-100 text-blue-600': selected === "demo"})}>
+                <Link href="/bots" passHref>
+                  <div className="flex items-center">
+                    <Image src={logoBinance} alt="Binance Logo" width={24} height={24} />
+                    <span className="ml-2" onClick={() => setSelected('demo')}>Demo</span>
+                  </div>
+                </Link>
+              </li>
+              <li className={clsx("inline-block rounded-lg px-4 py-2 hover:bg-sky-100 hover:text-blue-600 cursor-pointer", {'bg-sky-100 text-blue-600': selected === "plus"})}>
+                <Link href="/exchange" passHref>
+                  <span className="text-xl" onClick={() => setSelected('plus')}>+</span>
+                </Link>
               </li>
             </div>
           </div>
@@ -114,9 +144,8 @@ export function Header() {
             <div className="hidden md:block">
               <DropdownMenu /> {/* Desktop Dropdown Menu */}
             </div>
-           
             <div className="-mr-1 md:hidden">
-              <MobileNavigation />
+              <MobileNavigation setSelected={setSelected} />
             </div>
           </div>
         </nav>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none">
+    <!-- Gradient Definition -->
+    <defs>
+        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#4CAF50; stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#81C784; stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FF5722; stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#FFCDD2; stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <!-- Robotic head structure with 3D effects -->
+    <rect x="4" y="2" width="16" height="20" rx="2" ry="2" fill="url(#gradient1)"></rect>
+    <!-- Chart line within the robot's head, simulating a screen -->
+    <polyline points="6,18 9,12 12,16 16,6 20,10" stroke="url(#gradient2)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+    <!-- Eyes with a glossy 3D effect -->
+    <circle cx="8" cy="8" r="1" fill="#FFF"></circle>
+    <circle cx="16" cy="8" r="1" fill="#FFF"></circle>
+    <!-- Antenna on the head to enhance the robotic feel with a modern touch -->
+    <line x1="12" y1="1" x2="12" y2="2" stroke="#607D8B" stroke-width="2"></line>
+    <circle cx="12" cy="1" r="0.5" fill="#FFC107"></circle>
+</svg>

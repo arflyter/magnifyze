@@ -4,18 +4,28 @@ import { Header } from '@/components/Header'
 import Sidenav from '@/components/sidenav'
 import Explore from '@/components/explore'
 import ActiveTrades from '@/components/ActiveTrades';
+import React, { useState } from 'react';
 
-export default function Home() {
+
+
+const Home: React.FC = () => {
+  const [apiName, setApiName] = useState<string>('demo');
+
+  const handleNewApi = (newApiName: string) => {
+    setApiName(newApiName);
+  };
+
   return (
     <>
-      <Header />
+      <Header apiName={apiName} />
       <Sidenav/>
       <main>
-      
-       <Explore/>
-       <ActiveTrades/> 
+      <Explore/>
+      <ActiveTrades/> 
       </main>
-      <Footer />
+      Footer
     </>
-  )
-}
+  );
+};
+
+export default Home;
