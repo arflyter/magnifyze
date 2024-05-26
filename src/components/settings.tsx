@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Container } from '@/components/Container';
 import { Button } from '@/components/Button';
+import Link from 'next/link';
 
 const AccountSettings: React.FC = () => {
     const [is2FAEnabled, setIs2FAEnabled] = useState(false);
@@ -32,7 +33,7 @@ const AccountSettings: React.FC = () => {
                     <div className="text-right">
                         <h3 className="text-lg font-medium">Pro Plan</h3>
                         <p className="text-gray-500">$15</p>
-                        <Button className="mt-2">Upgrade to Pro</Button>
+                        <Button className="mt-2" href="/pricing">Upgrade to Pro</Button>
                     </div>
                 </div>
 
