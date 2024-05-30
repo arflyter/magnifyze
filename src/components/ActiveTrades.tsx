@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import { Container } from '@/components/Container';
-import { Button } from '@/components/Button';
 
 interface Trade {
   pair: string;
@@ -11,28 +10,29 @@ interface Trade {
   closedPrice?: number; // Optional for history trades
   profitLoss: number; // In percentage
   id: string;
+  date: string; // Added date field
 }
 
 const rsiTrades: Trade[] = [
-  { pair: "BTC/USDT", quantity: 1, enteredPrice: 60000, currentPrice: 63000, profitLoss: 5, id: 'btc-usdt-1' },
-  { pair: "ETH/USDT", quantity: 2, enteredPrice: 3000, currentPrice: 2900, profitLoss: -3.33, id: 'eth-usdt-1' },
+  { pair: "BTC/USDT", quantity: 1, enteredPrice: 60000, currentPrice: 63000, profitLoss: 5, id: 'btc-usdt-1', date: '2023-01-01' },
+  { pair: "ETH/USDT", quantity: 2, enteredPrice: 3000, currentPrice: 2900, profitLoss: -3.33, id: 'eth-usdt-1', date: '2023-01-02' },
   // Add more trades as needed, up to 5
 ];
 
 const fibonacciTrades: Trade[] = [
-  { pair: "ADA/USDT", quantity: 500, enteredPrice: 1.2, currentPrice: 1.3, profitLoss: 8.33, id: 'ada-usdt-1' },
+  { pair: "ADA/USDT", quantity: 500, enteredPrice: 1.2, currentPrice: 1.3, profitLoss: 8.33, id: 'ada-usdt-1', date: '2023-01-03' },
   // Add more trades as needed, up to 5
 ];
 
 const smartGridTrades: Trade[] = [
-  { pair: "KSM/USDT", quantity: 200, enteredPrice: 30, currentPrice: 33, profitLoss: 10, id: 'ksm-usdt-1' },
+  { pair: "KSM/USDT", quantity: 200, enteredPrice: 30, currentPrice: 33, profitLoss: 10, id: 'ksm-usdt-1', date: '2023-01-04' },
 ];
 
 const historyTrades: Trade[] = [
-  { pair: "BTC/USDT", quantity: 1, enteredPrice: 60000, closedPrice: 63000, profitLoss: 5, id: 'btc-usdt-2' },
-  { pair: "ETH/USDT", quantity: 2, enteredPrice: 3000, closedPrice: 2900, profitLoss: -3.33, id: 'eth-usdt-2' },
-  { pair: "ADA/USDT", quantity: 500, enteredPrice: 1.2, closedPrice: 1.3, profitLoss: 8.33, id: 'ada-usdt-2' },
-  { pair: "KSM/USDT", quantity: 200, enteredPrice: 30, closedPrice: 33, profitLoss: 10, id: 'ksm-usdt-2' },
+  { pair: "BTC/USDT", quantity: 1, enteredPrice: 60000, closedPrice: 63000, profitLoss: 5, id: 'btc-usdt-2', date: '2023-01-05' },
+  { pair: "ETH/USDT", quantity: 2, enteredPrice: 3000, closedPrice: 2900, profitLoss: -3.33, id: 'eth-usdt-2', date: '2023-01-06' },
+  { pair: "ADA/USDT", quantity: 500, enteredPrice: 1.2, closedPrice: 1.3, profitLoss: 8.33, id: 'ada-usdt-2', date: '2023-01-07' },
+  { pair: "KSM/USDT", quantity: 200, enteredPrice: 30, closedPrice: 33, profitLoss: 10, id: 'ksm-usdt-2', date: '2023-01-08' },
   // Add more history trades as needed
 ];
 
@@ -50,6 +50,7 @@ const ActiveTrades: React.FC = () => {
       <table className="min-w-full divide-y divide-gray-200 text-sm">
         <thead className="bg-gray-50">
           <tr>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trading Pair</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Entered Price</th>
@@ -70,6 +71,7 @@ const ActiveTrades: React.FC = () => {
 
             return (
               <tr key={trade.id}>
+                <td className="px-6 py-4 whitespace-nowrap">{trade.date}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{trade.pair}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{trade.quantity}</td>
                 <td className="px-6 py-4 whitespace-nowrap">${trade.enteredPrice.toFixed(2)}</td>
@@ -78,9 +80,9 @@ const ActiveTrades: React.FC = () => {
                 <td className="px-6 py-4 whitespace-nowrap">${totalAmount.toFixed(2)}</td>
                 {showStopButton && (
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <Button onClick={() => handleStopTrade(trade.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    <button onClick={() => handleStopTrade(trade.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
                       Stop Trade
-                    </Button>
+                    </button>
                   </td>
                 )}
               </tr>
@@ -93,14 +95,19 @@ const ActiveTrades: React.FC = () => {
 
   return (
     <Container>
-      
       <div className="flex justify-center mt-4">
-        <Button onClick={() => setActiveTab('active')} className={`mr-4 ${activeTab === 'active' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}>
+        <button
+          onClick={() => setActiveTab('active')}
+          className={`mr-4 px-4 py-2 rounded-full ${activeTab === 'active' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+        >
           Active Trades
-        </Button>
-        <Button onClick={() => setActiveTab('history')} className={`${activeTab === 'history' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}>
+        </button>
+        <button
+          onClick={() => setActiveTab('history')}
+          className={`px-4 py-2 rounded-full ${activeTab === 'history' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+        >
           History
-        </Button>
+        </button>
       </div>
       {activeTab === 'active' && (
         <div className="mt-4">
